@@ -155,4 +155,70 @@ def delete_comment(comment_id):
     flash('Blog deleted!')
     return redirect(url_for('main.comment',blog_id=blog.id))
 
+@main.route('/profile/user/<string:username>')
+def posted(username):
+    user=User.query.filter_by(username=username).first_or_404()
+    image=url_for('static',filename='profile/'+ user.profile_pic_path)
+    page=request.args.get('page',1,type=int)
+    blogs=Blogs.query.filter_by(user=user)\
+            .order_by(Blogs.posted_date.desc())\
+            .paginate(page=page,per_page=10)
+
+    return render_template('blogger_profile.html',blogs=blogs,title=user.username,user=user,image=image)
+
+
+@main.route('/blog/political')
+def political():
+    quotes=get_quote()
+    page=request.args.get('page',1,type=int)
+    blogs=Blogs.query.filter_by(category='Political Blog')\
+        .order_by(Blogs.posted_date.desc())\
+        .paginate(page=page,per_page=10)
+    return render_template('navbar/political.html',blogs=blogs,page=page,title='Political | Blogs',pages='political',quotes=quotes)
+
+
+@main.route('/blog/business')
+def business():
+    quotes=get_quote()
+    page=request.args.get('page',1,type=int)
+    blogs=Blogs.query.filter_by(category='Business Blog')\
+        .order_by(Blogs.posted_date.desc())\
+        .paginate(page=page,per_page=10)
+    return render_template('navbar/business.html',blogs=blogs,page=page,title='Business | Blogs',pages='business',quotes=quotes)
+
+@main.route('/blog/fashion')
+def fashion():
+    quotes=get_quote()
+    page=request.args.get('page',1,type=int)
+    blogs=Blogs.query.filter_by(category='Fashion Blog')\
+        .order_by(Blogs.posted_date.desc())\
+        .paginate(page=page,per_page=10)
+    return render_template('navbar/fashion.html',blogs=blogs,page=page,title='Fashion | Blogs',pages='fashion',quotes=quotes)
+
+@main.route('/blog/entertainment')
+def entertainment():
+    quotes=get_quote()
+    page=request.args.get('page',1,type=int)
+    blogs=Blogs.query.filter_by(category='Entertainment Blog')\
+        .order_by(Blogs.posted_date.desc())\
+        .paginate(page=page,per_page=10)
+    return render_template('navbar/entertainment.html',blogs=blogs,page=page,title='Entertainment | Blogs',pages='entertainment',quotes=quotes)
+
+@main.route('/blog/technology & innovation')
+def technology():
+    quotes=get_quote()
+    page=request.args.get('page',1,type=int)
+    blogs=Blogs.query.filter_by(category='Tech & Innovation Blog')\
+        .order_by(Blogs.posted_date.desc())\
+        .paginate(page=page,per_page=10)
+    return render_template('navbar/tech.html',blogs=blogs,page=page,title='Tech & Innovaton | Blogs',pages='tech',quotes=quotes)
+
+@main.route('/blog/sports')
+def sports():
+    quotes=get_quote()
+    page=request.args.get('page',1,type=int)
+    blogs=Blogs.query.filter_by(category='Sports Blog')\
+        .order_by(Blogs.posted_date.desc())\
+        .paginate(page=page,per_page=10)
+    return render_template('navbar/sports.html',blogs=blogs,page=page,title='Sports | Blogs',pages='sports',quotes=quotes)
 
