@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block styles%}
+    {{super()}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/index.css')}}">
+{% endblock%}
+{% block content%}
+<div class="row">
+    <div class="col-md-1 col-lg-1 col-xs-1"></div>
+    <div class="col-md-10 col-lg-10 col-xs-10 jumbotron">
+        <div class="card mb-6 bg-dark text-white">
+            <div class="card-body">
+            <h4 class="card-title"> <span class="label label-default">Blog Category: {{blog.category}}</span> <span></span><span class="label label-success">Posted By: {{blog.user.username}}</span></h4>
+            <p class="card-text">{{blog.blog}}</p>
+            <p class="card-text"><small class="text-muted">Posted At: <span class="badge badge-secondary">{{blog.posted_date.strftime('%Y-%m-%d')}}</span><span></span></small></p>
+            </div>
+        </div>
+        <p>
+            <class class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="link" aria-expanded="false" aria-controls="collapseExample">
+            Comment 
+            </class>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body form-inline">
+                {{wtf.quick_form(form)}}
+            </div>
+        </div>
+        <hr>
+        <div class=" card comments">
+            <h4 class="card-header">View all blog comments</h4>
+            <ul>
+                {% for comment in comments%}
+                <li style="list-style-type: none;">
+                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+                        {% if comment.user.profile_pic_path %}
+                        <img src="{{image}}" class="img-circle img-responsive" style="width: 30px; height: 30px;">
+                        {%else%}
+                        <img src="{{url_for('static', filename='profile/profile.png')}}" class="card-img rounded-circle" alt="" style="width: 25px; height: 25px;">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-6">
+                            <span class="header">{{comment.user.username}}</span> <br>
+                            <span class="rounded">{{comment.comment}} </span><hr>                          
+                    </div>
+                    <br>
+                    {% if blog.user==current_user%}
+                    <div class="col-md-2 col-lg-2 col-sm-2 col-xs-4">
+                        <a href="{{url_for('main.delete_comment',comment_id=comment.id)}}" class="btn btn-danger"><small>Delete comment</small></a>
+                    </div>
+                    {% endif %}
+                </li>
+                <br>
+                {% endfor%}
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-1 col-lg-1 col-xs-1"></div>
+</div>
+{% endblock %}
