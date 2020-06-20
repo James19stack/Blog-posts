@@ -2,7 +2,8 @@ from flask_wtf import FlaskForm
 from wtforms import TextAreaField,SubmitField,SelectField,StringField
 from wtforms.validators import DataRequired,Email,Length,ValidationError
 from flask_wtf.file import FileField,FileAllowed
-
+from app.models import User
+from flask_login import current_user
 class UploadBlog(FlaskForm):
     category=SelectField('Select Blog Category',validators=[DataRequired()],choices=[('Political Blog','Political Blog'),
                                                     ('Business Blog','Business Blog'),
