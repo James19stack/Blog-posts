@@ -2,7 +2,6 @@ import os
 class Config:
     SECRET_KEY=os.environ.get('SECRET_KEY')
     RANDOM_API='http://quotes.stormconsultancy.co.uk/random.json'
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://jefferson:james_22@localhost/blogposts'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     #  email configurations
     MAIL_SERVER = 'smtp.googlemail.com'
@@ -13,11 +12,15 @@ class Config:
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
 class ProdConfig(Config):
     pass
+class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://jefferson:james_22@localhost/blog_test'
 
 class DevConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://jefferson:james_22@localhost/blogposts'
     DEBUG=True
 
 config_options={
     'development':DevConfig,
-    'production':ProdConfig
+    'production':ProdConfig,
+    'test':TestConfig
 }    
