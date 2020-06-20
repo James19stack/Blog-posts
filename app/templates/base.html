@@ -37,7 +37,7 @@
                     <li {%if pages == 'tech'%} class="active" {% endif%} ><a href="{{url_for('main.technology')}}">Tech & Innovation</a></li>
                     <li {%if pages == 'sports'%} class="active" {% endif%} ><a href="{{url_for('main.sports')}}">Sports</a></li>
             </div>
-            <!-- <ul class="nav navbar-nav navbar-right form-inline">
+            <ul class="nav navbar-nav navbar-right form-inline">
                 {% if current_user.is_authenticated %}
                     {% if current_user.category=="Blogger"%}
                     <li {% if page == 'upload'%} class="active" {%endif%}><a href="{{url_for('main.uplaod_blog')}}">Upload New Blog</a></li>
@@ -47,8 +47,8 @@
                 {% else %}
                 <li><a href="{{url_for('auth.login')}}">Subscribe.</a></li>
                 {%endif%}
-            </ul> -->
-            
+            </ul> 
+             
     
         </div>
     </div>

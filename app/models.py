@@ -1,6 +1,14 @@
 from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
-class User(db.Model):
+from datetime import datetime
+import pytz
+from flask_login import UserMixin
+from . import login_manager
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+class User(db.Model,UserMixin):
     __tablename__="users"
     id=db.Column(db.Integer,primary_key=True)
     username=db.Column(db.String(30),nullable=False,unique=True)
@@ -9,8 +17,8 @@ class User(db.Model):
     category=db.Column(db.String)
     profile_pic_path=db.Column(db.String,default='profile.png')
     bio=db.Column(db.String)
-    # blog=db.relationship('Blogs',backref='user',lazy='dynamic')
-    # comment=db.relationship('Comment',backref='user',lazy='dynamic')
+    blog=db.relationship('Blogs',backref='user',lazy='dynamic')
+    comment=db.relationship('Comment',backref='user',lazy='dynamic')
 
     @property
     def password(self):
@@ -27,17 +35,17 @@ class User(db.Model):
         return f"User {self.username}"
 
 
-# date_time=datetime.utcnow().replace(tzinfo=pytz.UTC)
-# time_zone=date_time.astimezone(pytz.timezone('Africa/Nairobi'))
+date_time=datetime.utcnow().replace(tzinfo=pytz.UTC)
+time_zone=date_time.astimezone(pytz.timezone('Africa/Nairobi'))
 class Blogs(db.Model):
     __tablename__="blogs"
     id=db.Column(db.Integer,primary_key=True)
     blog=db.Column(db.String,nullable=False)
     category=db.Column(db.String)
-    # posted_date=db.Column(db.DateTime,default=time_zone)
+    posted_date=db.Column(db.DateTime,default=time_zone)
     upvotes=db.Column(db.Integer)
-    # user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
-    # comment=db.relationship('Comment',backref='blogs',lazy='dynamic')
+    user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
+    comment=db.relationship('Comment',backref='blogs',lazy='dynamic')
 
     def save_blog(self):
         db.session.add(self)
@@ -51,8 +59,8 @@ class  Comment(db.Model):
     __tablename__="comments"
     id=db.Column(db.Integer,primary_key=True)
     comment=db.Column(db.String)
-    # user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
-    # blog_id=db.Column(db.Integer,db.ForeignKey('blogs.id'))
+    user_id=db.Column(db.Integer,db.ForeignKey('users.id'))
+    blog_id=db.Column(db.Integer,db.ForeignKey('blogs.id'))
 
     def save_comment(self):
         db.session.add(self)
