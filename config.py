@@ -2,8 +2,8 @@ import os
 class Config:
     SECRET_KEY=os.environ.get('SECRET_KEY')
     RANDOM_API='http://quotes.stormconsultancy.co.uk/random.json'
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://jefferson:james_22@localhost/watchlist'
-
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://jefferson:james_22@localhost/blogposts'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 class ProdConfig(Config):
     pass
 

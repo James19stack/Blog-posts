@@ -3,8 +3,8 @@ import os
 from flask import render_template,redirect,url_for,flash,request,abort
 from . import main
 from .forms import UploadBlog,Comments,UpdateSettings
-from ..models import User,Blogs,Comment
-from ..request import get_quote
+from app.models import User,Blogs,Comment
+from app.request import get_quote
 from PIL import Image
 
 @main.route('/')
@@ -15,7 +15,7 @@ def index():
     return render_template('index.html',blogs=blogs ,page='index',quotes=quotes,title='Blog | Arena')
 
 @main.route('/new/blog', methods=['GET','POST'])
-@login_required
+# @login_required
 def uplaod_blog():
     form=UploadBlog()
     if form.validate_on_submit():
@@ -28,7 +28,7 @@ def uplaod_blog():
     return render_template('new_blog.html',form=form,title='New Blog' ,legend='Upload Blog',page='upload')
 
 @main.route('/<int:blog_id>/comment', methods=['GET','POST'])
-@login_required
+# @login_required
 def comment(blog_id):
     form_comment=Comments()
     image=url_for('static',filename='profile/'+current_user.profile_pic_path)
@@ -43,7 +43,7 @@ def comment(blog_id):
     return render_template('blog.html',form=form_comment,blog=blog,comments=comment_query,image=image,title='Comments')
 
 @main.route('/user/<string:user>' ,methods=['GET','POST'])
-@login_required
+# @login_required
 def profile(user):
     image=url_for('static',filename='profile/'+current_user.profile_pic_path)
     user=User.query.filter_by(username=user).first_or_404()
@@ -53,9 +53,9 @@ def profile(user):
         .paginate(page=page,per_page=10)
     return render_template('user_profile.html',page='profile',image=image,user=user,blogs=blogs)
 
-#BLOGGER DETAILS
+
 @main.route('/blogger/<string:user>' ,methods=['GET','POST'])
-@login_required
+# @login_required
 def blogger_profile(user):
     user=User.query.filter_by(username=user).first_or_404()
     image=url_for('static',filename='profile/'+ user.profile_pic_path)
@@ -69,7 +69,7 @@ def blogger_profile(user):
 
 
 @main.route('/update/blog/<int:blog_id>', methods=['GET','POST'])
-@login_required
+# @login_required
 def update_blog(blog_id):
     update=UploadBlog()
     blog=Blogs.query.filter_by(id=blog_id).first_or_404()
@@ -90,7 +90,7 @@ def update_blog(blog_id):
     return render_template('update_blog.html',update=update,legend='Update Blog',title='Update Blog')
 
 @main.route('/delete/blog/<int:blog_id>', methods=['POST'])
-@login_required
+# @login_required
 def delete_blog(blog_id):
     blog=Blogs.query.filter_by(id=blog_id).first_or_404()
     if blog.user !=current_user:
@@ -117,7 +117,7 @@ def save_picture(data):
 
 
 @main.route('/update/<string:user>', methods=['GET','POST'])
-@login_required
+# @login_required
 def update_settings(user):
     update_form=UpdateSettings()
     user=User.query.filter_by(username=user).first_or_404()
@@ -143,7 +143,7 @@ def update_settings(user):
     return render_template('setting_update.html', update=update_form,title='Settings Update')
     
 @main.route('/delete/comment/<int:comment_id>', methods=['GET','POST'])
-@login_required
+# @login_required
 def delete_comment(comment_id):
     comment=Comment.query.filter_by(id=comment_id).first_or_404()
     blog=Blogs.query.filter_by(id=comment.blogs.id).first()

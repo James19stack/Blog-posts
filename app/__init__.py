@@ -17,13 +17,13 @@ def create_app(config_name):
     db.init_app(app)
 
     # Registering the blueprint
-    from .main import main as main_blueprint
+    from main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
     #REGISTER CONFIGURATION
     app.config.from_object(config_options[config_name])
 
-    from ..request import create_configuration
+    from app.request import create_configuration
     create_configuration(app)
 
 
