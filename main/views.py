@@ -18,7 +18,7 @@ def index():
 
 @main.route('/new/blog', methods=['GET','POST'])
 @login_required
-def uplaod_blog():
+def upload_blog():
     form=UploadBlog()
     if form.validate_on_submit():
         blog=Blogs(category=form.category.data,blog=form.blog.data,user=current_user)
@@ -214,7 +214,7 @@ def technology():
         .order_by(Blogs.posted_date.desc())\
         .paginate(page=page,per_page=10)
     return render_template('navbar/tech.html',blogs=blogs,page=page,title='Tech & Innovaton | Blogs',pages='tech',quotes=quotes)
-
+ 
 @main.route('/blog/sports')
 def sports():
     quotes=get_quote()

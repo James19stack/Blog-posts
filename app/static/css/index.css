@@ -1,0 +1,18 @@
+body{
+    background-color: rgb(243, 225, 202);
+    width: 100%;
+}
+.header{
+    font-weight: bolder;
+}
+.comment-body{
+    background-color: white;
+}
+.list-index{
+    padding-left: 20px;
+    text-decoration: none;
+    
+}
+.list-index li{
+    text-decoration: none;
+}
