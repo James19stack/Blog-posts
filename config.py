@@ -4,13 +4,13 @@ class Config():
     SECRET_KEY=os.environ.get('SECRET_KEY')
     RANDOM_API='http://quotes.stormconsultancy.co.uk/random.json'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    #  email configurations
-    MAIL_SERVER = 'smtp.googlemail.com'
-    MAIL_PORT = 465
-    MAIL_USE_TLS = False
-    MAIL_USE_SSL= True
-    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
-    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    # #  email configurations
+    # MAIL_SERVER = 'smtp.googlemail.com'
+    # MAIL_PORT = 465
+    # MAIL_USE_TLS = False
+    # MAIL_USE_SSL= True
+    # MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    # MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
 class ProdConfig(Config):
      SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 class TestConfig(Config):
