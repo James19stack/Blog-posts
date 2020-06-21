@@ -3,7 +3,7 @@ Developer: Mirara James Maina
 
 Email: jeffersondev29@gmail.com
 
-To see the application run this site by clicking here:()
+To see the application run this site by clicking here:(https://posthunt.herokuapp.com/)
 
 ## Description
 Your task for this week is to create a personal blogging website where you can create and share your opinions and other users can read and comment on them. Additionally, add a feature that displays random quotes to inspire your users. 
